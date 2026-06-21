@@ -56,7 +56,7 @@ const Hero = () => {
   return (
     <section id='home' className='min-h-screen flex items-center justify-center bg-gray-900 relative overflow-hidden'>
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-64 left-96 w-80 h-80 bg-blue-500/20 rounded-full blur-xl"></div>
+        <div className="theme-bg-glow absolute top-64 left-96 w-80 h-80 rounded-full blur-xl"></div>
       </div>
 
       <motion.div
@@ -69,21 +69,21 @@ const Hero = () => {
         <motion.div variants={itemVariant} className='mb-8'>
           <motion.div whileHover={{ scale: 1.05 }} className='w-56 h-56 mx-auto'>
             <img src={profile} alt=""
-              className='w-full h-full object-cover rounded-full shadow-[0_0_30px_rgba(59,130,246,0.5)] hover:shadow-[0_0_40px_rgba(6,182,212,0.4)] transition-all duration-300' />
+              className='theme-shadow w-full h-full object-cover rounded-full transition-all duration-300' />
           </motion.div>
         </motion.div>
 
        
         <motion.h1 variants={itemVariant}
           className='text-5xl md:text-7xl font-bold text-white mb-6'>
-          Hi, I'm <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400'>Devisha</span>
+          Hi, I'm <span className='theme-heading text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400'>Sofia</span>
         </motion.h1>
 
       
         <motion.div variants={itemVariant} className='h-16 mb-6 mt-8'>
           <motion.h2 className='text-3xl md:text-4xl text-gray-200 font-light'>
             I'm a {' '}
-            <span className='text-cyan-300 border-r-2 border-cyan-300'>
+            <span className='theme-text theme-border text-cyan-300 border-r-2 border-cyan-300'>
               {displayText}
             </span>
           </motion.h2>
@@ -102,7 +102,7 @@ const Hero = () => {
             onClick={scrollToSmooth}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className='px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300'>
+            className='theme-gradient theme-shadow px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full font-semibold text-lg transition-all duration-300'>
             View My Work
           </motion.button>
 

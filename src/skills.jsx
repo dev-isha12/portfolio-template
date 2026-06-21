@@ -47,7 +47,7 @@ const Skills = () => {
     return (
         <section id='skills' className='min-h-screen flex items-center justify-center bg-gray-900 py-20 relative overflow-hidden'>
             <div className="absolute top-[100px] left-64 inset-x-0 flex items-start justify-center">
-                <div className="h-96 w-96 bg-gradient-to-br from-[#0268b0] to-blue-500 blur-2xl opacity-40 rounded-full"></div>
+                <div className="theme-gradient-br h-96 w-96 blur-2xl opacity-40 rounded-full"></div>
             </div>
 
             <motion.div
@@ -90,10 +90,10 @@ const Skills = () => {
                                     }}
                                 >
                                     <motion.div
-                                        className='bg-gray-800/80 backdrop-blur-sm rounded-full p-3 shadow-lg border border-blue-500/30'
+                                        className='theme-border bg-gray-800/80 backdrop-blur-sm rounded-full p-3 shadow-lg border'
                                         whileHover={{
                                             scale: 1.2,
-                                            boxShadow: '0 0 20px rgba(59, 130, 246, 0.6)'
+                                            boxShadow: '0 0 20px rgba(var(--theme-rgb), 0.6)'
                                         }}
                                     >
                                         <img src={skill.icon} alt={skill.name} className='w-16 h-16 object-contain' />
@@ -112,7 +112,7 @@ const Skills = () => {
                             variants={itemVariant}
                             className='text-4xl md:text-5xl font-bold mb-6'
                         >
-                            <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400'>My </span>
+                            <span className='theme-heading text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400'>My </span>
                             Skills
                         </motion.h2>
 
@@ -134,7 +134,7 @@ const Skills = () => {
                                             initial={{ width: 0 }}
                                             whileInView={{ width: `${skill.level}%` }}
                                             transition={{ duration: 1, delay: index * 0.2 }}
-                                            className='bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full'
+                                            className='theme-gradient bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full'
                                         />
                                     </div>
                                     <span className='text-gray-400 text-sm w-10'>{skill.level}%</span>

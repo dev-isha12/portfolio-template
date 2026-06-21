@@ -87,8 +87,8 @@ const Work = () => {
             className='min-h-screen flex items-center justify-center bg-gray-900 relative overflow-hidden py-20'
         >
             <div className='absolute inset-0 pointer-events-none'>
-                <div className='absolute top-24 right-12 md:right-64 h-96 w-96 bg-gradient-to-br from-[#0268b0] to-blue-500 blur-3xl opacity-30 rounded-full' />
-                <div className='absolute bottom-16 -left-32 h-72 w-72 bg-cyan-500/10 blur-3xl rounded-full' />
+                <div className='theme-gradient-br absolute top-24 right-12 md:right-64 h-96 w-96 blur-3xl opacity-30 rounded-full' />
+                <div className='theme-bg-soft absolute bottom-16 -left-32 h-72 w-72 blur-3xl rounded-full' />
             </div>
 
             <motion.div
@@ -103,15 +103,15 @@ const Work = () => {
                         <motion.div
                             animate={{ rotate: [0, -5, 0] }}
                             transition={{ duration: 3, repeat: Infinity }}
-                            className='p-3 rounded-2xl bg-blue-500/10 border border-blue-400/20'
+                            className='theme-bg-soft theme-border p-3 rounded-2xl border'
                         >
-                            <FolderIcon className='w-10 h-10 text-cyan-400' />
+                            <FolderIcon className='theme-text w-10 h-10 text-cyan-400' />
                         </motion.div>
                     </div>
 
                     <h2 className='text-4xl md:text-5xl font-bold text-white mb-4'>
                         Featured{' '}
-                        <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400'>
+                        <span className='theme-heading text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400'>
                             Projects
                         </span>
                     </h2>
@@ -129,7 +129,7 @@ const Work = () => {
                             key={project.id}
                             variants={itemVariant}
                             whileHover={{ y: -7 }}
-                            className='group bg-gray-800/50 backdrop-blur-lg rounded-2xl border border-blue-500/20 hover:border-cyan-400/50 overflow-hidden flex flex-col transition-colors duration-300 shadow-lg shadow-black/10'
+                            className='theme-border theme-hover group bg-gray-800/50 backdrop-blur-lg rounded-2xl border overflow-hidden flex flex-col transition-colors duration-300 shadow-lg shadow-black/10'
                         >
                             <div className={`h-40 bg-gradient-to-br ${project.color} relative overflow-hidden`}>
                                 <div className='absolute inset-0 bg-gray-950/30 transition-colors duration-300 group-hover:bg-gray-950/10' />
@@ -144,7 +144,7 @@ const Work = () => {
                             </div>
 
                             <div className='p-5 flex flex-col flex-1'>
-                                <h3 className='text-white font-semibold text-lg mb-2 group-hover:text-cyan-300 transition-colors'>
+                                <h3 className='theme-hover text-white font-semibold text-lg mb-2 transition-colors'>
                                     {project.title}
                                 </h3>
                                 <p className='text-gray-400 text-sm leading-relaxed mb-5 flex-1'>
@@ -166,7 +166,7 @@ const Work = () => {
                                     <a
                                         href={project.demo}
                                         aria-label={`View live demo of ${project.title}`}
-                                        className='flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white text-sm py-2.5 rounded-lg transition-all font-medium'
+                                        className='theme-gradient flex-1 inline-flex items-center justify-center gap-2 text-white text-sm py-2.5 rounded-lg transition-all font-medium'
                                     >
                                         Live demo
                                         <ArrowTopRightOnSquareIcon className='w-4 h-4' />
@@ -174,7 +174,7 @@ const Work = () => {
                                     <a
                                         href={project.code}
                                         aria-label={`View source code for ${project.title}`}
-                                        className='inline-flex items-center justify-center p-2.5 border border-white/10 hover:border-cyan-400/40 text-gray-300 hover:text-cyan-300 rounded-lg transition-colors'
+                                        className='theme-hover inline-flex items-center justify-center p-2.5 border border-white/10 text-gray-300 rounded-lg transition-colors'
                                     >
                                         <CodeBracketIcon className='w-5 h-5' />
                                     </a>
