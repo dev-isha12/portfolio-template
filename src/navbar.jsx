@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { HomeIcon, FolderIcon, LanguageIcon, EnvelopeIcon, AcademicCapIcon, BriefcaseIcon } from '@heroicons/react/24/outline'
 import { motion } from 'framer-motion'
+
+const navItems = [
+  { id: 'home', icon: HomeIcon, label: 'Home' },
+  { id: 'skills', icon: BriefcaseIcon, label: 'Skills' },
+  { id: 'education', icon: AcademicCapIcon, label: 'Education' },
+  { id: 'work', icon: FolderIcon, label: 'Work' },
+  { id: 'langauge', icon: LanguageIcon, label: 'Language' },
+  { id: 'contact', icon: EnvelopeIcon, label: 'Contact' }
+]
 
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home")
   const [isHovered, setIsHovered] = useState(false)
-
-  const navItems = [
-    { id: 'home', icon: HomeIcon, label: 'Home' },
-    { id: 'skills', icon: BriefcaseIcon, label: 'Skills' },
-    { id: 'education', icon: AcademicCapIcon, label: 'Education' },
-    { id: 'work', icon: FolderIcon, label: 'Work' },
-    { id: 'langauge', icon: LanguageIcon, label: 'Language' },
-    { id: 'contact', icon: EnvelopeIcon, label: 'Contact' }
-  ]
+  const isProgrammaticScroll = useRef(false)
+  const scrollAnimation = useRef(null)
 
   useEffect(() => {
-    const handleScroll = () => {
+    const updateActiveSection = () => {
       const sections = navItems.map(item => document.getElementById(item.id))
-      const scrollPos = window.scrollY + 100
+      const scrollPos = window.scrollY + window.innerHeight * 0.35
 
       sections.forEach(section => {
         if (section && scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
@@ -27,14 +29,60 @@ const Navbar = () => {
       })
     }
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    const handleScroll = () => {
+      if (!isProgrammaticScroll.current) {
+        updateActiveSection()
+      }
+    }
+
+    updateActiveSection()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.cancelAnimationFrame(scrollAnimation.current)
+    }
   }, [])
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId)
+
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      window.cancelAnimationFrame(scrollAnimation.current)
+      isProgrammaticScroll.current = true
+      setActiveSection(sectionId)
+
+      const startPosition = window.scrollY
+      const targetPosition = element.getBoundingClientRect().top + startPosition
+      const distance = targetPosition - startPosition
+      const duration = Math.min(900, Math.max(500, Math.abs(distance) * 0.35))
+      let startTime = null
+
+      const easeInOutCubic = (progress) => (
+        progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2
+      )
+
+      const animateScroll = (currentTime) => {
+        if (startTime === null) {
+          startTime = currentTime
+        }
+
+        const elapsed = currentTime - startTime
+        const progress = Math.min(elapsed / duration, 1)
+
+        window.scrollTo(0, startPosition + distance * easeInOutCubic(progress))
+
+        if (progress < 1) {
+          scrollAnimation.current = window.requestAnimationFrame(animateScroll)
+        } else {
+          window.scrollTo(0, targetPosition)
+          isProgrammaticScroll.current = false
+        }
+      }
+
+      scrollAnimation.current = window.requestAnimationFrame(animateScroll)
     }
   }
 
@@ -78,8 +126,8 @@ const Navbar = () => {
                       ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/50'
                       : 'text-gray-400 hover:text-white hover:bg-gray-700/60'
                   }`}
-                  whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.08, transition: { duration: 0.2 } }}
+                  whileTap={{ scale: 0.92 }}
                 >
                   <IconComponent className='w-5 h-5 lg:w-6 lg:h-6 relative z-10' />
 

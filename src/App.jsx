@@ -3,6 +3,7 @@ import Hero from './hero.jsx'
 import Navbar from './navbar.jsx'
 import Skills from './skills.jsx'
 import Education from './education.jsx'
+import Work from './work.jsx'
 const App = () => {
   return (
     <div>
@@ -10,6 +11,7 @@ const App = () => {
       <Navbar/>
       <Skills/>
       <Education/>
+      <Work/>
       
       
     </div>
