@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 const quickColors = [
     '#06b6d4', '#3b82f6', '#6366f1', '#8b5cf6', '#d946ef', '#ec4899',
-    '#f43f5e', '#ef4444', '#f97316', '#f59e0b', '#eab308', '#84cc16',
+    '#f43f5e', '#ef4444', '#f97316', '#972c49', '#eab308', '#84cc16',
     '#22c55e', '#10b981', '#14b8a6', '#0ea5e9', '#64748b', '#ffffff'
 ]
 
@@ -82,9 +82,12 @@ const lightenColor = (hex, amount = 0.28) => {
 const getInitialColor = () => {
     try {
         const savedTheme = JSON.parse(window.localStorage.getItem('portfolio-theme'))
-        return savedTheme?.primary || '#3b82f6'
+        if (savedTheme?.primary === '#3b82f6' || savedTheme?.primary === '#f59e0b') {
+            return '#972c49'
+        }
+        return savedTheme?.primary || '#972c49'
     } catch {
-        return '#3b82f6'
+        return '#972c49'
     }
 }
 
@@ -158,7 +161,7 @@ const ThemePalette = () => {
                 onClick={() => setIsOpen((current) => !current)}
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.92 }}
-                className='group relative w-14 h-14 rounded-full text-white flex items-center justify-center border-[3px] border-white/80 shadow-[0_0_24px_rgba(0,0,0,0.35)]'
+                className='group relative w-14 h-14 rounded-full text-white flex items-center justify-center border-[3px] border-white/80 shadow-[0_0_24px_rgba(0,0,0,0.35)] cursor-pointer'
                 style={{
                     background: isOpen
                         ? 'linear-gradient(135deg, #111827, #374151)'
@@ -227,7 +230,7 @@ const ThemePalette = () => {
                                     onClick={useEyeDropper}
                                     disabled={!window.EyeDropper}
                                     aria-label='Pick a color from the screen'
-                                    className='text-gray-900 disabled:text-gray-300'
+                                    className='text-gray-900 disabled:text-gray-300 cursor-pointer hover:bg-gray-100 p-1.5 rounded-lg transition-all duration-200'
                                 >
                                     <EyeDropperIcon className='w-8 h-8' />
                                 </button>
@@ -278,7 +281,7 @@ const ThemePalette = () => {
                                             type='button'
                                             aria-label={`Use color ${quickColor}`}
                                             onClick={() => selectColor(quickColor)}
-                                            className='w-7 h-7 rounded-full border border-gray-300 hover:scale-125 transition-transform'
+                                            className='w-7 h-7 rounded-full border border-gray-300 hover:scale-125 cursor-pointer transition-transform'
                                             style={{ backgroundColor: quickColor }}
                                         />
                                     ))}

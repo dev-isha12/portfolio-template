@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import profile from './assets/profile.png'
+
+const texts = ['Web Developer', 'UI/UX Designer']
 
 const Hero = () => {
   const [displayText, setDisplayText] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
-  const texts = ['Web Developer', 'UI/UX Designer']
   const currentText = texts[currentIndex]
 
   useEffect(() => {
@@ -29,11 +31,53 @@ const Hero = () => {
     }, isDeleting ? 50 : 100)
 
     return () => clearTimeout(timeout)
-  }, [displayText, isDeleting, currentIndex])
+  }, [displayText, isDeleting, currentIndex, currentText])
 
-  const scrollToSmooth = () => {
-    const element = document.getElementById('skills')
-    element?.scrollIntoView({ behavior: 'smooth' })
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 150)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const playProfileSound = () => {
+    const audio = new Audio('/click-sound.mp4')
+    audio.volume = 0.8
+
+    const stopAudio = () => {
+      audio.pause()
+      audio.removeEventListener('timeupdate', checkTime)
+    }
+
+    const checkTime = () => {
+      if (audio.currentTime >= 22) {
+        stopAudio()
+      }
+    }
+
+    audio.addEventListener('timeupdate', checkTime)
+
+    const startPlayback = () => {
+      audio.currentTime = 19
+      audio.play().then(() => {
+        // 3000ms is exactly 3 seconds (from 19s to 22s)
+        setTimeout(stopAudio, 3000)
+      }).catch(err => {
+        console.warn("Audio playback failed or was blocked by browser autoplay policy:", err)
+      })
+    }
+
+    if (audio.readyState >= 1) {
+      startPlayback()
+    } else {
+      audio.addEventListener('loadedmetadata', startPlayback, { once: true })
+    }
+  }
+
+  const handleProfileClick = () => {
+    playProfileSound()
   }
 
   const containerVariant = {
@@ -54,10 +98,7 @@ const Hero = () => {
   }
 
   return (
-    <section id='home' className='min-h-screen flex items-center justify-center bg-gray-900 relative overflow-hidden'>
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="theme-bg-glow absolute top-64 left-96 w-80 h-80 rounded-full blur-xl"></div>
-      </div>
+    <section id='home' className='min-h-screen flex items-center justify-center bg-white relative overflow-hidden'>
 
       <motion.div
         variants={containerVariant}
@@ -66,24 +107,63 @@ const Hero = () => {
         className='container mx-auto px-6 text-center relative z-10'>
 
        
-        <motion.div variants={itemVariant} className='mb-8'>
-          <motion.div whileHover={{ scale: 1.05 }} className='w-56 h-56 mx-auto'>
-            <img src={profile} alt=""
-              className='theme-shadow w-full h-full object-cover rounded-full transition-all duration-300' />
-          </motion.div>
+        <motion.div variants={itemVariant} className='mb-8 h-56 relative z-25 flex justify-center items-center'>
+          {!isScrolled && (
+            <div className="relative">
+              {/* "Play me!" Arrow Indicator */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1,
+                  y: [0, -6, 0]
+                }}
+                transition={{
+                  y: {
+                    repeat: Infinity,
+                    duration: 2.2,
+                    ease: "easeInOut"
+                  },
+                  duration: 0.5,
+                  delay: 0.8
+                }}
+                className="absolute -left-36 top-8 hidden md:flex items-center space-x-1 rotate-[-15deg] pointer-events-none select-none theme-text"
+              >
+                <span className="font-sketch text-2xl font-normal tracking-wide">
+                  play me!
+                </span>
+                <svg className="w-14 h-10 opacity-80" viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round">
+                  {/* Smooth curved hand-drawn arrow pointing down-right */}
+                  <path d="M10,38 Q48,12 85,26" />
+                  <path d="M85,26 L72,21" />
+                  <path d="M85,26 L76,38" />
+                </svg>
+              </motion.div>
+
+              <motion.div
+                layoutId="profile-avatar"
+                whileHover={{ scale: 1.05 }}
+                onClick={handleProfileClick}
+                className='theme-shadow w-56 h-56 mx-auto cursor-pointer rounded-full'
+              >
+                <img src={profile} alt="Devisha"
+                  className='w-full h-full object-cover rounded-full transition-all duration-300' />
+              </motion.div>
+            </div>
+          )}
         </motion.div>
 
        
         <motion.h1 variants={itemVariant}
-          className='text-5xl md:text-7xl font-bold text-white mb-6'>
-          Hi, I'm <span className='theme-heading text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400'>Sofia</span>
+          className='text-5xl md:text-7xl font-light text-gray-900 mb-6'>
+          Hi, I'm <span className='font-sketch theme-heading text-transparent bg-clip-text bg-gradient-to-r from-blue-650 to-indigo-650'>Devisha</span>
         </motion.h1>
 
       
         <motion.div variants={itemVariant} className='h-16 mb-6 mt-8'>
-          <motion.h2 className='text-3xl md:text-4xl text-gray-200 font-light'>
+          <motion.h2 className='text-xl md:text-2xl text-gray-700 font-light'>
             I'm a {' '}
-            <span className='theme-text theme-border text-cyan-300 border-r-2 border-cyan-300'>
+            <span className='theme-text theme-border border-r-2'>
               {displayText}
             </span>
           </motion.h2>
@@ -91,24 +171,22 @@ const Hero = () => {
 
         
         <motion.p variants={itemVariant}
-          className='text-xl text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, provident praesentium expedita, sint quaerat neque maiores debitis odit ipsa, fugiat nobis architecto omnis quia dolore aut deleniti excepturi recusandae enim!
+          className='text-lg md:text-xl text-gray-500 mb-12 max-w-2xl mx-auto leading-relaxed font-light'>
+          I design clean user interfaces and write simple, structured code. I love crafting minimal, high-performance web products that feel alive.
         </motion.p>
 
-       
-        <motion.div variants={itemVariant}
-          className='flex flex-col sm:flex-row gap-4 justify-center items-center'>
-          <motion.button
-            onClick={scrollToSmooth}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className='theme-gradient theme-shadow px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full font-semibold text-lg transition-all duration-300'>
-            View My Work
-          </motion.button>
-
-          
-        </motion.div>
-
+        {isScrolled && (
+          <motion.div
+            layoutId="profile-avatar"
+            whileHover={{ scale: 1.1 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className='fixed top-5 right-6 z-[60] w-14 h-14 cursor-pointer rounded-full border-2 border-white shadow-md'
+            transition={{ type: 'spring', stiffness: 200, damping: 25 }}
+          >
+            <img src={profile} alt="Devisha"
+              className='w-full h-full object-cover rounded-full' />
+          </motion.div>
+        )}
       </motion.div>
     </section>
   )

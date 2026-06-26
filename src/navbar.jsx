@@ -80,7 +80,7 @@ const Navbar = () => {
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.5 }}
-        className='fixed left-4 lg:left-20 top-[58%] -translate-y-1/2 z-50 hidden lg:block'
+        className='fixed left-4 lg:left-6 top-[58%] -translate-y-1/2 z-50 hidden lg:block'
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -91,7 +91,7 @@ const Navbar = () => {
               : '0 0 30px rgba(var(--theme-rgb), 0.4)'
           }}
           transition={{ duration: 0.4 }}
-          className="theme-border bg-gray-800/90 backdrop-blur-xl rounded-full p-3 lg:p-4 border relative"
+          className="theme-border bg-white/85 backdrop-blur-xl rounded-full p-3 lg:p-4 border relative shadow-sm"
         >
           <motion.div
             animate={{ opacity: isHovered ? 0.8 : 0.4 }}
@@ -109,33 +109,40 @@ const Navbar = () => {
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   onClick={() => scrollToSection(item.id)}
-                  className={`relative group p-2 lg:p-3 rounded-full transition-all duration-300 ${
+                  className={`relative group p-2 lg:p-3 rounded-full transition-colors duration-350 cursor-pointer ${
                     activeSection === item.id
-                      ? 'theme-gradient theme-shadow text-white'
-                      : 'text-gray-400 hover:text-white hover:bg-gray-700/60'
+                      ? 'text-white'
+                      : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100/80'
                   }`}
-                  whileHover={{ scale: 1.08, transition: { duration: 0.2 } }}
+                  whileHover={{ scale: 1.12, transition: { duration: 0.2 } }}
                   whileTap={{ scale: 0.92 }}
                 >
                   <IconComponent className='w-5 h-5 lg:w-6 lg:h-6 relative z-10' />
 
                   {activeSection === item.id && (
-                    <motion.div
-                      animate={{
-                        boxShadow: [
-                          '0 0 10px rgba(var(--theme-rgb), 0.8)',
-                          '0 0 20px rgba(var(--theme-rgb), 0.6)',
-                          '0 0 10px rgba(var(--theme-rgb), 0.8)'
-                        ]
-                      }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className='theme-bg-glow absolute inset-0 rounded-full'
-                    />
+                    <>
+                      <motion.div
+                        layoutId="active-nav-bg"
+                        transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+                        className='theme-gradient theme-shadow absolute inset-0 rounded-full z-0'
+                      />
+                      <motion.div
+                        animate={{
+                          boxShadow: [
+                            '0 0 10px rgba(var(--theme-rgb), 0.8)',
+                            '0 0 20px rgba(var(--theme-rgb), 0.6)',
+                            '0 0 10px rgba(var(--theme-rgb), 0.8)'
+                          ]
+                        }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                        className='theme-bg-glow absolute inset-0 rounded-full z-0 pointer-events-none'
+                      />
+                    </>
                   )}
 
-                  <div className="absolute left-full ml-3 px-2 py-1 lg:px-3 lg:py-2 bg-gray-900/95 text-white text-xs lg:text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap backdrop-blur-sm border border-gray-700 shadow-xl">
+                  <div className="absolute left-full ml-3 px-2 py-1 lg:px-3 lg:py-2 bg-white text-gray-800 text-xs lg:text-sm rounded-lg opacity-0 translate-x-2 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap border border-gray-200 shadow-md">
                     {item.label}
-                    <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-gray-900 rotate-45" />
+                    <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-white border-l border-b border-gray-200 rotate-45" />
                   </div>
                 </motion.button>
               )

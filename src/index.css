@@ -1,13 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --theme-primary: #3b82f6;
-  --theme-secondary: #22d3ee;
-  --theme-rgb: 59, 130, 246;
+  --theme-primary: #972c49;
+  --theme-secondary: #b4677c;
+  --theme-rgb: 151, 44, 73;
+}
+
+.font-sketch {
+  font-family: 'Caveat', cursive, system-ui;
+}
+
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  cursor: pointer;
 }
 
 html {
+  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
+}
+
+section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+body {
+  background-color: #ffffff;
+  color: #111827;
 }
 
 .theme-gradient {
@@ -23,28 +47,28 @@ html {
 }
 
 .theme-text {
-  color: var(--theme-secondary) !important;
+  color: var(--theme-primary) !important;
 }
 
 .theme-border {
-  border-color: color-mix(in srgb, var(--theme-secondary) 32%, transparent) !important;
+  border-color: color-mix(in srgb, var(--theme-primary) 15%, transparent) !important;
 }
 
 .theme-bg-soft {
-  background-color: rgba(var(--theme-rgb), 0.12) !important;
+  background-color: rgba(var(--theme-rgb), 0.08) !important;
 }
 
 .theme-bg-glow {
-  background-color: rgba(var(--theme-rgb), 0.24) !important;
+  background-color: rgba(var(--theme-rgb), 0.04) !important;
 }
 
 .theme-shadow {
-  box-shadow: 0 0 24px rgba(var(--theme-rgb), 0.45) !important;
+  box-shadow: 0 10px 30px -10px rgba(var(--theme-rgb), 0.15) !important;
 }
 
 .theme-hover:hover {
-  color: var(--theme-secondary) !important;
-  border-color: color-mix(in srgb, var(--theme-secondary) 45%, transparent) !important;
+  color: var(--theme-primary) !important;
+  border-color: color-mix(in srgb, var(--theme-primary) 30%, transparent) !important;
 }
 
 .hue-slider {
@@ -83,4 +107,14 @@ html {
   box-shadow: 0 0 0 3px #111827;
   background: transparent;
   cursor: pointer;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

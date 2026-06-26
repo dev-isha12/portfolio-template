@@ -1,23 +1,23 @@
-import { LanguageIcon } from '@heroicons/react/24/outline'
+import { ChatBubbleBottomCenterTextIcon, LanguageIcon, SparklesIcon } from '@heroicons/react/24/outline'
 import { motion } from 'framer-motion'
 
 const languages = [
-    { code: 'US', name: 'English', level: 'Fluent', proficiency: 90 },
-    { code: 'FR', name: 'French', level: 'Intermediate', proficiency: 70 },
-    { code: 'ES', name: 'Spanish', level: 'Intermediate', proficiency: 65 },
-    { code: 'DE', name: 'German', level: 'Basic', proficiency: 40 }
+    { code: 'EN', name: 'English', level: 'Fluent', proficiency: 90, note: 'Clear writing and confident communication' },
+    { code: 'HI', name: 'Hindi', level: 'Native', proficiency: 95, note: 'Natural everyday and professional conversations' },
+    { code: 'FR', name: 'French', level: 'Learning', proficiency: 55, note: 'Growing vocabulary and basic conversation' },
+    { code: 'ES', name: 'Spanish', level: 'Beginner', proficiency: 35, note: 'Exploring phrases, grammar, and pronunciation' }
 ]
 
 const containerVariant = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
-        transition: { staggerChildren: 0.16 }
+        transition: { staggerChildren: 0.14 }
     }
 }
 
 const itemVariant = {
-    hidden: { y: 24, opacity: 0 },
+    hidden: { y: 26, opacity: 0 },
     visible: {
         y: 0,
         opacity: 1,
@@ -29,94 +29,88 @@ const Language = () => {
     return (
         <section
             id='language'
-            className='min-h-screen flex items-center justify-center bg-gray-900 relative overflow-hidden py-20'
+            className='min-h-screen flex items-center justify-center bg-white relative overflow-hidden py-20'
         >
-            <div className='absolute inset-0 pointer-events-none'>
-                <div className='theme-bg-glow absolute top-20 left-1/2 -translate-x-1/2 h-96 w-96 blur-3xl rounded-full' />
-                <div className='theme-bg-soft absolute bottom-10 right-10 h-64 w-64 blur-3xl rounded-full' />
-            </div>
+            <div className='theme-bg-soft absolute top-16 left-10 h-40 w-40 rounded-full blur-3xl opacity-70' />
+            <div className='theme-bg-soft absolute bottom-16 right-10 h-56 w-56 rounded-full blur-3xl opacity-60' />
 
             <motion.div
                 variants={containerVariant}
                 initial='hidden'
                 whileInView='visible'
                 viewport={{ once: false, margin: '-60px' }}
-                className='container mx-auto px-6 relative z-10 max-w-4xl'
+                className='container mx-auto px-6 relative z-10 max-w-6xl'
             >
-                <motion.div variants={itemVariant} className='text-center mb-10'>
-                    <div className='flex justify-center mb-4'>
+                <motion.div variants={itemVariant} className='grid lg:grid-cols-[0.85fr_1.15fr] gap-10 items-center'>
+                    <div>
                         <motion.div
-                            animate={{ rotate: [0, -5, 5, 0] }}
-                            transition={{ duration: 4, repeat: Infinity }}
-                            className='theme-bg-soft theme-border p-3 rounded-2xl border'
+                            animate={{ rotate: [0, -5, 5, 0], y: [0, -5, 0] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                            className='theme-bg-soft theme-border mb-5 w-16 h-16 rounded-3xl border flex items-center justify-center'
                         >
-                            <LanguageIcon className='theme-text w-10 h-10 text-cyan-400' />
+                            <LanguageIcon className='theme-text w-10 h-10' />
                         </motion.div>
+
+                        <p className='theme-text font-sketch text-3xl mb-1'>words matter</p>
+                        <h2 className='text-4xl md:text-6xl font-light text-gray-900'>
+                            Languages I <span className='theme-heading text-transparent bg-clip-text'>Speak</span>
+                        </h2>
+                        <p className='text-gray-600 text-lg mt-5 leading-relaxed'>
+                            Communication is part of good design too — these are the languages I use to connect, explain, and collaborate.
+                        </p>
+
+                        <div className='theme-border mt-8 bg-white rounded-3xl border border-gray-200/80 p-5 shadow-[0_18px_45px_rgba(17,24,39,0.06)]'>
+                            <div className='flex items-center gap-3'>
+                                <ChatBubbleBottomCenterTextIcon className='theme-text w-7 h-7' />
+                                <div>
+                                    <h3 className='font-medium text-gray-900'>Communication style</h3>
+                                    <p className='text-gray-500 text-sm'>Simple, warm, and easy to understand.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <h2 className='text-4xl md:text-5xl font-bold mb-4'>
-                        <span className='theme-heading text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400'>
-                            Languages
-                        </span>
-                    </h2>
-                    <p className='text-gray-300 text-lg'>
-                        The languages I speak and my proficiency level in each.
-                    </p>
-                </motion.div>
-
-                <motion.div
-                    variants={itemVariant}
-                    className='theme-border theme-shadow relative bg-gray-800/45 backdrop-blur-xl border rounded-2xl p-5 md:p-8'
-                >
-                    <div className='theme-bg-soft absolute -inset-px rounded-2xl blur-md -z-10' />
-
-                    <div className='space-y-4'>
+                    <div className='grid sm:grid-cols-2 gap-5'>
                         {languages.map((language, index) => (
-                            <motion.div
+                            <motion.article
                                 key={language.code}
                                 variants={itemVariant}
-                                whileHover={{ x: 5, scale: 1.01 }}
-                                className='theme-hover group bg-gray-700/55 hover:bg-gray-700/75 border border-white/5 rounded-xl p-4 md:p-5 transition-colors duration-300'
+                                whileHover={{ y: -8, rotate: index % 2 === 0 ? -1 : 1 }}
+                                className='theme-border group relative overflow-hidden bg-white rounded-[1.75rem] border border-gray-200/80 p-5 shadow-[0_18px_50px_rgba(17,24,39,0.07)]'
                             >
-                                <div className='flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6'>
-                                    <div className='flex items-center gap-4 sm:w-52'>
-                                        <div className='theme-border theme-hover w-11 h-11 shrink-0 rounded-lg bg-gray-800/70 border flex items-center justify-center text-gray-300 font-bold text-sm transition-colors'>
+                                <div className='theme-bg-soft absolute -right-10 -top-10 h-28 w-28 rounded-full group-hover:scale-125 transition-transform duration-500' />
+                                <div className='relative'>
+                                    <div className='flex items-start justify-between gap-4 mb-8'>
+                                        <div className='theme-gradient h-14 w-14 rounded-2xl text-white flex items-center justify-center font-semibold text-lg shadow-lg shadow-black/10'>
                                             {language.code}
                                         </div>
-                                        <div>
-                                            <h3 className='text-white font-semibold'>
-                                                {language.name}
-                                            </h3>
-                                            <p className='theme-text text-cyan-400 text-xs mt-0.5'>
-                                                {language.level}
-                                            </p>
-                                        </div>
+                                        <SparklesIcon className='theme-text w-5 h-5 opacity-70 group-hover:rotate-12 transition-transform' />
                                     </div>
 
-                                    <div className='flex-1 flex items-center gap-4'>
-                                        <div className='flex-1 h-2 bg-gray-900/60 rounded-full overflow-hidden'>
+                                    <h3 className='text-2xl font-medium text-gray-900'>{language.name}</h3>
+                                    <p className='theme-text text-sm font-semibold mt-1'>{language.level}</p>
+                                    <p className='text-gray-500 text-sm leading-relaxed mt-3 min-h-10'>{language.note}</p>
+
+                                    <div className='mt-5'>
+                                        <div className='flex items-center justify-between text-xs mb-2'>
+                                            <span className='text-gray-500'>Proficiency</span>
+                                            <span className='theme-text font-bold'>{language.proficiency}%</span>
+                                        </div>
+                                        <div className='h-2.5 bg-gray-100 rounded-full overflow-hidden'>
                                             <motion.div
                                                 initial={{ width: 0 }}
                                                 whileInView={{ width: `${language.proficiency}%` }}
                                                 viewport={{ once: false }}
-                                                transition={{
-                                                    duration: 1,
-                                                    delay: index * 0.15,
-                                                    ease: 'easeOut'
-                                                }}
-                                                className='theme-gradient theme-shadow h-full rounded-full'
+                                                transition={{ duration: 1, delay: index * 0.12, ease: 'easeOut' }}
+                                                className='theme-gradient h-full rounded-full'
                                             />
                                         </div>
-                                        <span className='theme-text w-10 text-right text-cyan-300 text-sm font-semibold'>
-                                            {language.proficiency}%
-                                        </span>
                                     </div>
                                 </div>
-                            </motion.div>
+                            </motion.article>
                         ))}
                     </div>
                 </motion.div>
-
             </motion.div>
         </section>
     )
